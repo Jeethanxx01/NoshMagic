@@ -36,7 +36,7 @@ public class AppConfig {
                 .cors(cors->cors.configurationSource(corsConfigurationSource()));
 
 
-        return null;
+        return http.build();
 
     }
 
