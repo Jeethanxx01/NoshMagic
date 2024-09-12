@@ -5,6 +5,7 @@ import com.nosh.model.Cart;
 import com.nosh.model.User;
 import com.nosh.repository.CartRepository;
 import com.nosh.repository.UserRepository;
+import com.nosh.request.LoginRequest;
 import com.nosh.response.AuthResponse;
 import com.nosh.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,11 @@ public class AuthController {
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 
+    public ResponseEntity<AuthResponse>signin(@RequestBody LoginRequest req) {
 
+
+        return null;
+
+    }
 
 }
