@@ -82,7 +82,7 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> SearchRestaurant(String keyword) {
+    public List<Restaurant>searchRestaurant(String keyword) {
         return restaurantRepository.findBySearchQuery(keyword);
     }
 
@@ -106,7 +106,7 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public RestaurantDto addToFavorite(Long restaurantId, User user) throws Exception {
+    public RestaurantDto addToFavorites(Long restaurantId, User user) throws Exception {
 
        Restaurant restaurant=findRestaurantById(restaurantId);
 
@@ -116,12 +116,26 @@ public class RestaurantServiceImp implements RestaurantService {
        dto.setTitle(restaurant.getName());
        dto.setId(restaurantId);
 
-       if(user.getFavorites().contains(dto)){
-           user.getFavorites().remove(dto);
-       }
+        boolean isFavorite = false;
+        List<RestaurantDto> favorites = user.getFavorites(); // Corrected case
 
-       else user.getFavorites().add(dto);
-       userRepository.save(user);
+// Check if the restaurant is already in the favorites
+        for (RestaurantDto favorite : favorites) {
+            if (favorite.getId().equals(restaurantId)) {
+                isFavorite = true;
+                break;
+            }
+        }
+
+        if (isFavorite) {
+            // Remove the restaurant from favorites if it's already present
+            favorites.removeIf(favorite -> favorite.getId().equals(restaurantId)); // Corrected lambda expression
+        } else {
+            // Add the restaurant to favorites if it's not already present
+            favorites.add(dto); // Assumed dto is passed in from the method context
+        }
+
+        userRepository.save(user);
         return dto;
     }
 
