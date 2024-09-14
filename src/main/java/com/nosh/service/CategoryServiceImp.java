@@ -37,7 +37,7 @@ public class CategoryServiceImp implements CategoryService{
         Optional<Category>optionalCategory = categoryRepository.findById(id);
 
         if (optionalCategory.isEmpty()){
-            throw new Exception("No category found")
+            throw new Exception("No category found");
         }
         return optionalCategory.get();
     }
